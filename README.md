@@ -1,46 +1,62 @@
-# Getting Started with Create React App
+# Focus Fullstack Engineer Exercise
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the fullstack exercise for Focus Consulting.  The exercise is aimed at generating evidence that can be brought to an interview for discussion as well as to provide a small example of the kind of work that you will potentially be working on.  Each exercise is written in the form of ticket; each part of the exercise is complete after all the acceptance criteria is complete.
 
-## Available Scripts
+## Repository structure
 
-In the project directory, you can run:
+Note: this includes just the relevant files for the exercise
 
-### `yarn start`
+```
+src/
+  server/
+    db.ts // DB configuration and setup
+    index.ts // Server entrypoint
+  hooks/
+    useStates.ts // example hook
+  pages/
+    StateSearch.tsx // example page
+    InterstateTradeSearch.tsx // Implement
+    StateEconomySearch.tsx // Implement
+    Login.tsx // Implement
+    Signup.tsx // Implement
+  App.tsx // Main app which includes navigation and the routes that get rendered
+  index.tsx // React entry point
+  app.db // SQLite DB.  This can get deleted as many times as you would like. App startup will recreate if it does not exist
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Styling
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+These exercsises are not a test of design, so the majority of the effort should be spent on getting the functionality implemented.  The repository is making use of [styled-components](https://styled-components.com/) but you are welcome to bring in any UI library you are comfortable with.
 
-### `yarn test`
+## Relevant commands
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `yarn install` : downloads all the dependencies for the app
+- `yarn start` : starts the frontend React app.  Changes will cause a reload
+- `yarn server:watch` : starts the backend API.  Changes will cause a reload of the server
 
-### `yarn build`
+## Instructions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Fork this repository into your own account.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Details for what needs to be done can be found by starting up the app or at [instructions](./src/pages/instructions.md).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Once you are done with exercises, push all the completed code to your fork and then share the repository with your interviewer; instructions are included in the interview invite.
 
-### `yarn eject`
+## Interviewer Notes
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- The goal is to get a sense of how a candidate would do with well scoped tickets for a project.  Interviewer should conduct a code review with the candidate, verifying that functionality is all there (as well as tests) and providing feedback on the work
+- The exercise is *not* intended to test a candidate's design chops; however, do note if they they spent time on this and how it does look
+- It's okay if the candidate stores the passwords as plain text.  If they do though, interviewer should press on what enhancements could be made to make the implementation more secure
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Follow Up Questions
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- What are some alternative authorization strategies you could use?
+- How would you make the login/signup process more secure?
+- How would you design a table that would store the recent searches a user has performed?
+- What are some techniques that you could use as the database schema evolves with new product requirements?
+- What are some advantages of using graphql vs. a typical REST API?
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## References
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Local Passport Example](https://github.com/microsoft/TypeScript-Node-Starter/blob/master/src/config/passport.ts)
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

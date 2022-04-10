@@ -24,8 +24,6 @@ Each exercise is written in the form of a typical user story ticket; each part o
 3. Work on the [exercises](./src/pages/instructions.md).
 4. Once you are done with exercises, push all the completed code to your fork and then share the repository with your interviewer; instructions are included in the interview invite.
 
-Details for what needs to be done can be found by starting up the app or at [instructions](./src/pages/instructions.md).
-
 ## Timeline
 
 We expect work on the exercises to take 2-4 hours. You may spend as much time as you like on them.
@@ -54,15 +52,16 @@ src/
   app.db // SQLite DB.  This can get deleted as many times as you would like. App startup will recreate if it does not exist
 ```
 
+
+## Styling
+
+These exercsises are not a test of design, so the majority of the effort should be spent on getting the functionality implemented.  The repository is making use of [styled-components](https://styled-components.com/) but you are welcome to bring in any UI library you are comfortable with.
+
 ## Relevant commands
 
 - `yarn install` : downloads all the dependencies for the app
 - `yarn start` : starts the frontend React app.  Changes will cause a reload
 - `yarn server:watch` : starts the backend API.  Changes will cause a reload of the server
-
-## Styling
-
-These exercsises are not a test of design, so the majority of the effort should be spent on getting the functionality implemented.  The repository is making use of [styled-components](https://styled-components.com/) but you are welcome to bring in any UI library you are comfortable with.
 
 ## References
 

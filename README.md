@@ -1,6 +1,36 @@
 # Focus Fullstack Engineer Exercise
 
-This is the fullstack exercise for Focus Consulting.  The exercise is aimed at generating evidence that can be brought to an interview for discussion as well as to provide a small example of the kind of work that you will potentially be working on.  Each exercise is written in the form of ticket; each part of the exercise is complete after all the acceptance criteria is complete.
+This is the fullstack technical exercise for Focus Consulting.
+
+Objectives:
+- provide you with an example of the kind of work that you will likely be working on
+- provide a context for our upcoming discussion/interview
+- provide evidence of your coding ability and understanding of relevant stack
+- create an efficient interviewing process based on early alignment on both sides
+
+Technical Stack:
+- Typescript
+- Node
+- GraphQL
+- Express
+- React
+
+Each exercise is written in the form of a typical user story ticket; each part of the exercise is complete after all the acceptance criteria is met.
+
+## Instructions
+
+1. Complete reading through this README page.
+2. Fork this repository into your own account.
+3. Work on the [exercises](./src/pages/instructions.md).
+4. Once you are done with exercises, push all the completed code to your fork and then share the repository with your interviewer; instructions are included in the interview invite.
+
+Details for what needs to be done can be found by starting up the app or at [instructions](./src/pages/instructions.md).
+
+## Timeline
+
+We expect work on the exercises to take 2-4 hours. You may spend as much time as you like on them.
+
+You have 7 days from the day we send you the exercise to submit your forked repo. Since most of our projects need roles filled in quickly, we encourage you to submit as soon as you are able.
 
 ## Repository structure
 
@@ -24,23 +54,22 @@ src/
   app.db // SQLite DB.  This can get deleted as many times as you would like. App startup will recreate if it does not exist
 ```
 
-## Styling
-
-These exercsises are not a test of design, so the majority of the effort should be spent on getting the functionality implemented.  The repository is making use of [styled-components](https://styled-components.com/) but you are welcome to bring in any UI library you are comfortable with.
-
 ## Relevant commands
 
 - `yarn install` : downloads all the dependencies for the app
 - `yarn start` : starts the frontend React app.  Changes will cause a reload
 - `yarn server:watch` : starts the backend API.  Changes will cause a reload of the server
 
-## Instructions
+## Styling
 
-Fork this repository into your own account.
+These exercsises are not a test of design, so the majority of the effort should be spent on getting the functionality implemented.  The repository is making use of [styled-components](https://styled-components.com/) but you are welcome to bring in any UI library you are comfortable with.
 
-Details for what needs to be done can be found by starting up the app or at [instructions](./src/pages/instructions.md).
+## References
 
-Once you are done with exercises, push all the completed code to your fork and then share the repository with your interviewer; instructions are included in the interview invite.
+- [Local Passport Example](https://github.com/microsoft/TypeScript-Node-Starter/blob/master/src/config/passport.ts)
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+---
 
 ## Interviewer Notes
 
@@ -56,7 +85,4 @@ Once you are done with exercises, push all the completed code to your fork and t
 - What are some techniques that you could use as the database schema evolves with new product requirements?
 - What are some advantages of using graphql vs. a typical REST API?
 
-## References
 
-- [Local Passport Example](https://github.com/microsoft/TypeScript-Node-Starter/blob/master/src/config/passport.ts)
-- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

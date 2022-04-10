@@ -1,6 +1,15 @@
 # Exercises
 
-The data be fetched is all publicly available at https://datausa.io/, which is powered by a public API that can be accessed without an API key.  The goal of these exercises is to write implementations that match the accept criteria.
+The data be fetched is all publicly available at https://datausa.io/, which is powered by a public API that can be accessed without an API key.  The goal of these exercises is to write implementations that match the acceptance criteria.
+
+Recommended approach:
+- For each exercise, create a pull request (PR) and merge your PR into master
+
+## Setup
+
+- `yarn install` : downloads all the dependencies for the app
+- `yarn start` : starts the frontend React app. Changes will cause a reload
+- `yarn server:watch` : starts the backend API. Changes will cause a reload of the server
 
 ## 1. Create a UI for visualizing interstate trade for a state
 
@@ -16,6 +25,7 @@ The data be fetched is all publicly available at https://datausa.io/, which is p
 
 ### Implementation Notes
 
+- Implement your solution in InterstateTrade.tsx
 - [This](https://datausa.io/api/data?Origin%20State=04000US51&measure=Millions%20Of%20Dollars,Thousands%20Of%20Tons&drilldowns=Destination%20State&year=latest) is an example URL (for Virginia) that returns the data.
 - The data can be fetched directly from the datause.io API in the browser (this is how the example State search is implemented)
 
@@ -24,7 +34,7 @@ The data be fetched is all publicly available at https://datausa.io/, which is p
 ### Acceptance Criteria
 
 - As a user, I would like to be able to search for a state and select the data I would like to see
-  - Interstate trade
+  - Interstate trade (similar view to Exercise 1)
   - Employment History
   - Median household income
 - As a user, I would like to expand a state returned from interstate trade to view the same data but for that state
@@ -33,7 +43,7 @@ The data be fetched is all publicly available at https://datausa.io/, which is p
 ### Implementation Notes
 
 - There is an existing graphql query that can be referenced as an example.  It queries for states and accepts an optional name parameter
-- The graphql queries can be explored and test locally at [graphql](http://localhost:4000/graphql)
+- The graphql queries can be explored and tested locally at [graphql](http://localhost:4000/graphql)
 
 ## 3. Create a login flow and restrict access to the existing pages when a user is not logged in
 
@@ -49,5 +59,5 @@ The data be fetched is all publicly available at https://datausa.io/, which is p
 
 - Recommended approach is use to passport, but you are welcome to choose any implementation
 - There is an existing table/model for a user
-- You do not need to worry about creating a secure login
+- Encrypting a password is not a requirement of this ticket
 - The new endpoints should be implemented as RESTful endpoints in the express API

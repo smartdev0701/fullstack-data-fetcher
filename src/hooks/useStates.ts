@@ -8,7 +8,7 @@ export interface StateRow {
 }
 
 const useStates = () => {
-    const [results, setResults] = useState<StateRow[]>()
+    const [states, setStates] = useState<StateRow[]>()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -16,12 +16,12 @@ const useStates = () => {
                 'https://topaz.datausa.io/api/searchLegacy?dimension=Geography&hierarchy=State&limit=50000'
             )
             const data = await response.json()
-            setResults(data.results)
+            setStates(data.results)
         }
         fetchData()
     }, [])
 
-    return results
+    return {states}
 }
 
 export default useStates

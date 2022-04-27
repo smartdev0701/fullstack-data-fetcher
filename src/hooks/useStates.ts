@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-
+import { useState, useEffect, useCallback } from 'react'
 export interface StateRow {
     id: string
     key: string
@@ -9,6 +8,14 @@ export interface StateRow {
 
 const useStates = () => {
     const [states, setStates] = useState<StateRow[]>()
+
+    const [nameSearchString, setNameSearchString] = useState<string>('')
+    const clearFilter = useCallback(() => {
+        setNameSearchString('')
+    }, [])
+    const search = useCallback((searchString: string) => {
+        setNameSearchString(searchString)
+    }, [])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,7 +28,20 @@ const useStates = () => {
         fetchData()
     }, [])
 
-    return {states}
+    if (nameSearchString.trim() !== '' && states) {
+        return {
+            states: states?.filter((state) =>
+            state.name
+                    .toLowerCase()
+                    .startsWith(nameSearchString.toLowerCase())
+            ),
+            clearFilter,
+            search,
+            nameFilter: nameSearchString,
+        }
+    }
+
+    return { states, clearFilter, search, nameFilter: nameSearchString }
 }
 
 export default useStates

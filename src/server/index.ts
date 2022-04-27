@@ -1,10 +1,17 @@
 import { ApolloServer } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer, gql } from 'apollo-server-core'
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import http from 'http'
 import fetch from 'node-fetch'
-import { createSchema } from './db'
+import { createSchema, User } from './db'
 import { maxBy, sortBy, reverse } from 'lodash'
+import passport from 'passport'
+import passportLocal, { IVerifyOptions } from 'passport-local'
+import session from 'express-session'
+import bodyParser from 'body-parser'
+import cors from 'cors'
+
+const LocalStrategy = passportLocal.Strategy
 
 let states: State[] | null = null
 
@@ -250,12 +257,139 @@ const resolvers = {
     },
 }
 
+passport.deserializeUser(async (id: number, done) => {
+    const user = await User.query().findById(id).execute()
+    done(undefined, user)
+})
+
+passport.serializeUser((user, done) => {
+    // @ts-ignore
+    done(undefined, user.id)
+})
+
+passport.use(
+    new LocalStrategy(
+        { usernameField: 'username', passwordField: 'password' },
+        async (username, password, done) => {
+            const userStmt = await User.query()
+                .where('username', '=', username)
+                .where('password', '=', password)
+                .execute()
+            const user = userStmt[0]
+            if (!user) {
+                return done(undefined, false, {
+                    message: 'Invalid credentials',
+                })
+            }
+
+            return done(undefined, user)
+        }
+    )
+)
+
+const signup = async (req: Request, res: Response, next: NextFunction) => {
+    const { username, password } = req.body
+    await User.query().insert({ username, password }).execute()
+    passport.authenticate(
+        'local',
+        (err: Error, user: User, info: IVerifyOptions) => {
+            if (err) {
+                return next(err)
+            }
+            if (!user) {
+                return res.sendStatus(403)
+            }
+            return req.logIn(user, () => {
+                return res.redirect('http://localhost:3000')
+            })
+        }
+    )(req, res, next)
+}
+
+const login = (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate(
+        'local',
+        (err: Error, user: User, info: IVerifyOptions) => {
+            if (err) {
+                return next(err)
+            }
+            if (!user) {
+                return res.sendStatus(403)
+            }
+            return req.logIn(user, () => {
+                const session = req.session
+                // @ts-ignore
+                session.userId = user.id
+                return req.session.save(() => {
+                    return res.sendStatus(204)
+                })
+            })
+        }
+    )(req, res, next)
+}
+
+const logout = (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate(
+        'local',
+        (err: Error) => {
+            if (err) {
+                return next(err)
+            }
+            req.logout();
+            return req.session.destroy(() => {
+                return res.sendStatus(204)
+            })
+        }
+    )(req, res, next)
+}
+
+const sessionHandler = (req: Request, res: Response, next: NextFunction) => {
+    return res.status(200).send(req.user || {})
+}
+
 async function startServer() {
     const app = express()
+    app.use(bodyParser.json())
+    app.use(
+        cors({
+            credentials: true,
+            origin: 'http://localhost:3000',
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            preflightContinue: false,
+            optionsSuccessStatus: 204,
+        })
+    )
+    app.use(
+        session({
+            resave: true,
+            saveUninitialized: true,
+            secret: 'abc',
+            // store,
+            name: 'test-app.sid',
+            cookie: {
+                sameSite: 'lax',
+            },
+        })
+    )
+    app.use(passport.initialize())
+    app.use(passport.session())
+    app.use((req, res, next) => {
+        res.locals.user = req.user
+        next()
+    })
+    app.post('/signup', signup)
+    app.post('/login', login)
+    // app.post('/logout', logout);
+      
+    app.get('/session', sessionHandler)
     const httpServer = http.createServer(app)
     const server = new ApolloServer({
         typeDefs,
         resolvers,
+        context: ({ req }) => ({
+            getUser: () => req.user,
+            logout: () => req.logout(),
+        }),
         plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     })
     await createSchema()

@@ -1,6 +1,8 @@
 import React from 'react'
 import DataTable from 'react-data-table-component'
 import useStates, { StateRow } from '../hooks/useStates'
+import { WithUserProps } from '../App'
+import { Navigate } from 'react-router-dom'
 
 const columns = [
     {
@@ -32,21 +34,36 @@ const columns = [
         ),
     },
 ]
-const StateSearch = () => {
-    const { states } = useStates()
+const StateSearch = ({ user }: WithUserProps) => {
+    const { states, clearFilter, search, nameFilter } = useStates()
+    if (!user) {
+        return <Navigate replace to="/login" />
+    }
 
     if (!states) {
         return <div>'Loading states...'</div>
     }
 
     return (
-        <DataTable
-            title="State List"
-            columns={columns}
-            data={states}
-            progressPending={states === undefined}
-            pagination
-        />
+        <div>
+            <div>
+                <label htmlFor="state">Search for a state</label>
+                <input
+                    value={nameFilter}
+                    onChange={(evt) => search(evt.target.value)}
+                    name="state"
+                    type="text"
+                />
+                <button onClick={clearFilter}>Clear Search</button>
+            </div>
+            <DataTable
+                title="State List"
+                columns={columns}
+                data={states}
+                progressPending={states === undefined}
+                pagination
+            />
+        </div>
     )
 }
 

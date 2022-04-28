@@ -300,7 +300,8 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
                 return res.sendStatus(403)
             }
             return req.logIn(user, () => {
-                return res.redirect('http://localhost:3000')
+                // return res.redirect('http://localhost:3000')
+                return res.sendStatus(204)
             })
         }
     )(req, res, next)

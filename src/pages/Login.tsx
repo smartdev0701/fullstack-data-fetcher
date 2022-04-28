@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { API_URL } from '../config'
 
 const Login = () => {
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+
+    const navigate = useNavigate()
     return (
         <div>
             <form
@@ -10,7 +14,7 @@ const Login = () => {
                 action="#"
                 onSubmit={async (evt) => {
                     evt.preventDefault()
-                    await fetch('http://localhost:4000/login', {
+                    const res = await fetch(`${API_URL}/login`, {
                         method: 'POST',
                         body: JSON.stringify({ username, password }),
                         headers: {
@@ -18,6 +22,9 @@ const Login = () => {
                         },
                         credentials: 'include',
                     })
+
+                    if (res.status === 204)
+                        navigate('/states', { replace: true })
                 }}
             >
                 <div>
@@ -32,6 +39,7 @@ const Login = () => {
                     <label htmlFor="password">Password</label>
                     <input
                         name="password"
+                        type="password"
                         value={password}
                         onChange={(evt) => setPassword(evt.target.value)}
                     />

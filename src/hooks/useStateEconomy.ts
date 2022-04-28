@@ -5,11 +5,12 @@ import {
     gql,
 } from '@apollo/client'
 import { useCallback, useEffect, useState } from 'react'
+import { API_URL } from '../config'
 import useStates from './useStates'
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     cache: new InMemoryCache(),
-    uri: 'http://localhost:4000/graphql',
+    uri: `${API_URL}/graphql`,
 })
 
 interface EmploymentSummary {
@@ -44,7 +45,7 @@ export interface StateEconomyResult {
 }
 
 const useStateEconomy = () => {
-    const { states: states } = useStates()
+    const { states } = useStates()
     const [results, setResults] = useState<StateEconomyResult[]>()
     const [summariesToFetch, setSummariesToFetch] = useState<{
         production: boolean
